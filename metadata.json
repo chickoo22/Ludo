@@ -1,0 +1,6 @@
+{
+  "name": "Ludo Master",
+  "description": "Real-time multiplayer Ludo game with 2-4 player modes, AI bots, and global matchmaking",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
