@@ -33,6 +33,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = navController, startDestination = "home") {
                         composable("home") {
                             HomeScreen(
+                                viewModel = ludoViewModel,
                                 onStartGame = { mode, playerCount ->
                                     navController.navigate("setup/${mode.name}")
                                 },
@@ -56,8 +57,8 @@ class MainActivity : ComponentActivity() {
                             val mode = try { GameMode.valueOf(modeStr) } catch (e: Exception) { GameMode.PASS_AND_PLAY }
                             SetupScreen(
                                 mode = mode,
-                                onStartGame = { selectedMode, playerCount, aiDiff ->
-                                    ludoViewModel.startNewGame(selectedMode, playerCount, aiDiff)
+                                onStartGame = { selectedMode, variant, playerConfigs, aiDiff, boardTheme ->
+                                    ludoViewModel.startCustomGame(selectedMode, variant, playerConfigs, aiDiff, boardTheme)
                                     navController.navigate("game")
                                 },
                                 onBack = { navController.popBackStack() }

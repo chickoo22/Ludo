@@ -15,14 +15,25 @@ enum class GameMode {
     ONLINE_MULTIPARTY
 }
 
+enum class GameVariant {
+    CLASSIC, // Requires all 4 tokens home
+    QUICK    // Only 1 token needs to reach home
+}
+
 enum class AIDifficulty {
     EASY, MEDIUM, HARD
 }
 
+enum class BoardTheme(val displayName: String) {
+    CLASSIC_WOOD("Classic Wood"),
+    NEON_NIGHT("Neon Night"),
+    MINIMALIST("Minimalist")
+}
+
 data class Token(
-    val id: Int, // 0 to 3 for each player
+    val id: Int, // 0 to 3
     val playerColor: PlayerColor,
-    val position: Int = -1, // -1 = base, 0-51 = main path, 500-505 = home path, 999 = finished
+    val position: Int = -1, // -1 = base, 0-51 = main path, 500-505 = home path, 505 = finished
     val isHome: Boolean = false,
     val isFinished: Boolean = false
 )
@@ -35,12 +46,14 @@ data class Player(
     val aiDifficulty: AIDifficulty = AIDifficulty.MEDIUM,
     val tokens: List<Token> = listOf(0, 1, 2, 3).map { Token(it, color) },
     val rank: Int? = null,
-    val isConnected: Boolean = true
+    val avatarEmoji: String = "🦁",
+    val chatReaction: String? = null
 )
 
 data class GameState(
     val gameId: String = "local_game",
     val mode: GameMode = GameMode.PASS_AND_PLAY,
+    val variant: GameVariant = GameVariant.CLASSIC,
     val players: List<Player> = emptyList(),
     val currentTurnPlayerIndex: Int = 0,
     val diceValue: Int? = null,
@@ -48,6 +61,8 @@ data class GameState(
     val hasRolled: Boolean = false,
     val consecutiveSixes: Int = 0,
     val winner: Player? = null,
-    val logMessage: String = "Game started! Red's turn to roll.",
-    val isGameOver: Boolean = false
+    val logMessage: String = "Game started! Roll the dice!",
+    val isGameOver: Boolean = false,
+    val captureEventMessage: String? = null,
+    val boardTheme: BoardTheme = BoardTheme.CLASSIC_WOOD
 )
